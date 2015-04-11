@@ -6,6 +6,8 @@ import io.github.celebes.hibernate.dao.impl.CourseDao;
 import io.github.celebes.hibernate.dao.impl.StudentDao;
 import io.github.celebes.hibernate.model.Course;
 import io.github.celebes.hibernate.model.Student;
+import io.github.celebes.hibernate.model.StudentCourse;
+import io.github.celebes.hibernate.model.StudentCourseId;
 import io.github.celebes.hibernate.model.StudentId;
 
 import javax.persistence.EntityManager;
@@ -70,6 +72,37 @@ public class AppTest {
 		System.out.println("Znaleziono: " + student);
 		assertNotNull(student);
 		assertEquals(student.getName(), studentName);
+	}
+	
+	@Test
+	public void shouldCreateBoth() throws Exception {
+		System.out.println("Both test");
+		
+		String courseName = "Matematyka-" + System.nanoTime();
+		Course course = new Course(courseName);
+		courseDao.save(course);
+		
+		String studentName = "Krzysztof Liczbowy-" + System.nanoTime();
+		int nextId = studentDao.findAll().size() + 1;
+		StudentId sid = new StudentId(nextId, nextId);
+		Student student = new Student(sid, studentName);
+		studentDao.save(student);
+		
+		StudentCourseId scid = new StudentCourseId();
+		scid.setCourseId(course.getId());
+		scid.setStudentId(student.getId());
+		
+		StudentCourse sc = new StudentCourse();
+		sc.setId(scid);
+		sc.setCourse(course);
+		sc.setStudent(student);
+		
+		em.getTransaction().begin();
+		em.persist(sc);
+		em.getTransaction().commit();
+		
+		sc = em.find(StudentCourse.class, scid);
+		assertNotNull(sc);
 	}
 
 }
