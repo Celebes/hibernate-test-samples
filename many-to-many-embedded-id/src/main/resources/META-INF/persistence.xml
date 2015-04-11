@@ -5,6 +5,7 @@
 	<persistence-unit name="h2-db" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>io.github.celebes.hibernate.model.Student</class>
+		<!-- <class>io.github.celebes.hibernate.model.StudentId</class> -->
 		<class>io.github.celebes.hibernate.model.Course</class>
 		<properties>
 			<property name="hibernate.connection.url" value="jdbc:h2:file:C:/data/hibernate-many-to-many-embedded-id-test" />

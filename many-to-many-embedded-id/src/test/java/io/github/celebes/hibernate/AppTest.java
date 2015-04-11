@@ -1,8 +1,12 @@
 package io.github.celebes.hibernate;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import io.github.celebes.hibernate.dao.impl.CourseDao;
 import io.github.celebes.hibernate.dao.impl.StudentDao;
 import io.github.celebes.hibernate.model.Course;
+import io.github.celebes.hibernate.model.Student;
+import io.github.celebes.hibernate.model.StudentId;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,9 +15,6 @@ import javax.persistence.Persistence;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class AppTest {
 	
@@ -38,6 +39,7 @@ public class AppTest {
 
 	@Test
 	public void shouldCreateCourse() throws Exception {
+		System.out.println("Course test");
 		String courseName = "Matematyka-" + System.nanoTime();
 		int numOfCoursesBefore = courseDao.findAll().size();
 		
@@ -45,11 +47,29 @@ public class AppTest {
 		courseDao.save(course);
 		
 		course = courseDao.findById(course.getId());
+		System.out.println("Znaleziono: " + course);
 		assertNotNull(course);
 		assertEquals(course.getName(), courseName);
 		
 		int numOfCoursesAfter = courseDao.findAll().size();
 		assertEquals(1, numOfCoursesAfter - numOfCoursesBefore);
+	}
+	
+	@Test
+	public void shouldCreateStudent() throws Exception {
+		System.out.println("Student test");
+		String studentName = "Krzysztof Liczbowy-" + System.nanoTime();
+		int nextId = studentDao.findAll().size() + 1;
+		StudentId sid = new StudentId(nextId, nextId);
+		
+		Student student = new Student(sid, studentName);
+		
+		studentDao.save(student);
+		
+		student = studentDao.findById(student.getId());
+		System.out.println("Znaleziono: " + student);
+		assertNotNull(student);
+		assertEquals(student.getName(), studentName);
 	}
 
 }

@@ -38,7 +38,7 @@ public abstract class DaoImpl<T> implements Dao<T> {
 		save(t);
 	}
 	
-	public T findById(Integer id) {
+	public T findById(Object id) {
 		return em.find(type, id);
 	}
 	
