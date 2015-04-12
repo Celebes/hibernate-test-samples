@@ -21,13 +21,10 @@ public class Course implements Serializable {
 	
 	@Id
 	@GeneratedValue
-	@Column(name = "course_id")
+	@Column(name = "course_id", nullable = false)
 	private int id;
 	
 	private String name;
-	
-	@ElementCollection(targetClass=StudentCourse.class)
-	private Set<StudentCourse> studentCourses = new HashSet<StudentCourse>(0);
 	
 	public Course() {
 		
@@ -51,16 +48,6 @@ public class Course implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.course", cascade=CascadeType.ALL)
-	@MapKey(name = "id")
-	public Set<StudentCourse> getStudentCourses() {
-		return studentCourses;
-	}
-
-	public void setStudentCourses(Set<StudentCourse> studentCourses) {
-		this.studentCourses = studentCourses;
 	}
 
 	@Override

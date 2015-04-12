@@ -7,7 +7,6 @@ import io.github.celebes.hibernate.dao.impl.StudentDao;
 import io.github.celebes.hibernate.model.Course;
 import io.github.celebes.hibernate.model.Student;
 import io.github.celebes.hibernate.model.StudentCourse;
-import io.github.celebes.hibernate.model.StudentCourseId;
 import io.github.celebes.hibernate.model.StudentId;
 
 import javax.persistence.EntityManager;
@@ -88,12 +87,7 @@ public class AppTest {
 		Student student = new Student(sid, studentName);
 		studentDao.save(student);
 		
-		StudentCourseId scid = new StudentCourseId();
-		scid.setCourseId(course.getId());
-		scid.setStudentId(student.getId());
-		
 		StudentCourse sc = new StudentCourse();
-		sc.setId(scid);
 		sc.setCourse(course);
 		sc.setStudent(student);
 		
@@ -101,8 +95,6 @@ public class AppTest {
 		em.persist(sc);
 		em.getTransaction().commit();
 		
-		sc = em.find(StudentCourse.class, scid);
-		assertNotNull(sc);
 	}
 
 }

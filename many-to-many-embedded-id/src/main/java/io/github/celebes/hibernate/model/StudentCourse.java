@@ -49,7 +49,7 @@ public class StudentCourse {
 		this.student = student;
 	}
 	
-	@ManyToOne()
+	@ManyToOne
 	@MapsId("courseId")
 	@JoinColumn(name = "course_id", referencedColumnName = "course_id", insertable = false, updatable = false)
 	public Course getCourse() {

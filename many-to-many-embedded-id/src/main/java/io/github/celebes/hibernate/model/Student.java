@@ -22,9 +22,6 @@ public class Student implements Serializable {
 	
 	private String name;
 	
-	@ElementCollection(targetClass=StudentCourse.class)
-	private Set<StudentCourse> studentCourses = new HashSet<StudentCourse>(0);
-	
 	public Student() {
 		
 	}
@@ -48,16 +45,6 @@ public class Student implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.student", cascade=CascadeType.ALL)
-	@MapKey(name = "id")
-	public Set<StudentCourse> getStudentCourses() {
-		return studentCourses;
-	}
-
-	public void setStudentCourses(Set<StudentCourse> studentCourses) {
-		this.studentCourses = studentCourses;
 	}
 
 	@Override
