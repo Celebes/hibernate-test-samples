@@ -12,10 +12,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "student_course")
-@AssociationOverrides({
-    @AssociationOverride(name = "pk.course", joinColumns = @JoinColumn(name = "COURSE_ID")),
-    @AssociationOverride(name = "pk.student", joinColumns = { @JoinColumn(name = "STUDENT_ID_1"), @JoinColumn(name = "STUDENT_ID_2") }) 
-})
 public class StudentCourse {
 
 	private StudentCourseId id;
